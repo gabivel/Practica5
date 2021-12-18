@@ -1,0 +1,82 @@
+syntax = "proto3";
+package gestorArchivosDistribuido;
+// definición del servicio gestor de archivos
+service Gestor {
+
+  // Confirma si el usuario existe
+  rpc confirmaUsuario (NombreUsuario) returns (RespuestaUsuario) {}
+
+  // Confirma si contraseña es correcta
+  rpc confirmaPassword (Passwrd) returns (RespuestaPassword) {}
+
+  // Recibe un nombre de directorio y envia secuencia de nombres de archivos
+  rpc listarDirectorio(N_Directorio) returns (stream RespuestaArchivo) {}
+
+  //Crea un archivo y manda confirmacion
+  rpc Create (NombreArchivo) returns (RespuestaOperacion) {}
+
+  //renombra un archivo
+  rpc Rename (NombreArchivos) returns (RespuestaOperacion) {}
+
+  //remueve un archivo
+  rpc Remove (NombreArchivo) returns (RespuestaOperacion) {}
+
+  //Crea un directorio
+  rpc MakeDir (N_Directorio) returns (RespuestaOperacion) {}
+
+  //remueve un directorio
+  rpc RemoveDir (N_Directorio) returns (RespuestaOperacion) {}
+
+  // Recibe nombre de archivo y regresa secuencia de informacion del archivo
+  rpc Read(NombreArchivo) returns (stream RespuestaArchivo) {}
+
+  // Recibe informacion de archivo y regresa confirmacion
+  rpc Write(InfoArchivo) returns (RespuestaOperacion) {}
+
+  // Recibe un nombre de directorio y envia secuencia de nombres de archivos
+  rpc ReadDir(N_Directorio) returns (stream RespuestaArchivo) {}
+
+}
+
+
+//mensaje de solicitud con nombre del usuario
+message NombreUsuario {
+  string nombre = 1;
+}
+//El mensaje de respuesta al usuario
+message RespuestaUsuario {
+  string r_usuario = 1;
+}
+// El mensaje del password
+message Passwrd {
+  string user = 1;
+  string passwrd = 2;
+}
+//El mensaje de respuesta al password
+message RespuestaPassword {
+  string r_passwrd = 1;
+}
+// nombre del directorio a listar
+message N_Directorio {
+  string directorio = 1;
+}
+//El mensaje de respuesta al usuario
+message RespuestaArchivo {
+  string archivo = 1;
+}
+message NombreArchivo {
+  string n_archivo = 1;
+}
+message RespuestaOperacion {
+  string r_operacion = 1;
+}
+
+message NombreArchivos {
+  string curr_archivo = 1;
+  string new_archivo = 2;
+}
+
+ message InfoArchivo {
+  string archivo = 1;
+  string info = 2;
+ }
